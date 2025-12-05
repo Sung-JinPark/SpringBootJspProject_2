@@ -19,8 +19,8 @@ p{
    white-space: nowrap;
    text-overflow: ellipsis;
 }
-a-link{
-	cursor: pointer;
+.a-link:hover{
+  cursor: pointer;
 }
 </style>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -40,29 +40,18 @@ a-link{
 		    </div>
 		  </div>
     </div>
+    <div class="row text-center" style="margin-top: 10px">
+       <ul class="pagination">
+          
+          <li v-if="startPage>1"><a class="a-link" @click="prev(startPage-1)">&lt;</a></li>
+        
+          <li v-for="i in range(startPage,endPage)" :class="curpage==i?'active':''"><a class="a-link" @click="pageChange(i)">{{i}}</a></li>
+         
+          <li v-if="endPage<totalpage"><a class="a-link" @click="next(endPage+1)">&gt;</a></li>
+          
+       </ul>
+     </div>
   </div>
-  
-  <div class =" container">
-  <div class ="row">
-    <div class="col-md-3">
-    <div class="thumbnail">
-      <a href="#">
-        <img src="${vo.poster }" alt="Lights" style="width:240px;height: 120px">
-        <div class="caption">
-          <p>${vo.title }</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  </div>
-  <div class="row text-center" style="marigin-top: 10px">
-   <ul class="pagination">
-	<li v-if="startPage>1"><a class="a-link" @click="prev(startPage-1)">&lt;</a></li>
-    <li v-for="i in range(startPage,endPage)" :class="i===curpage?'active':''"><a class="a-link" @click="pageChange(i)">{{i}}</a></li>
-    <li v-if="endPage<totalpage"><a class="a-link" @click="next(endPage+1)">&gt;</a></li>
-   </ul>
-  </div>
- </div>
   <script>
     let musicApp=Vue.createApp({
     	data(){
@@ -93,11 +82,11 @@ a-link{
     		},
     		range(start,end){
     			let arr=[]
-    			let len = end-start
-    			for(let i=0;i<len;i++)
-    			{
-    				arr[i]=start
-    				start++;
+    			let len=end-start
+    			for(let i=0;i<=len;i++)
+    		    {
+    			    arr[i]=start
+    			    start++
     			}
     			return arr
     		},
@@ -105,8 +94,7 @@ a-link{
     			this.curpage=page
     			this.dataRecv()
     		},
-    		next(page)
-    		{
+    		next(page){
     			this.curpage=page
     			this.dataRecv()
     		},
